@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Moving cities? See the salary you need to keep the same lifestyle after local prices and 2026 federal, state, and city income taxes. Compare 31 U.S. cities.">
+<meta property="og:title" content="Paycheck Parity">
+<meta property="og:description" content="The salary you need in a new city after prices and income taxes.">
+<title>Paycheck Parity</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column; inputs card, the answer, a side by side paycheck breakdown, then every city ranked */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --fg:#17201d; --muted:#5b6762; --line:#d9e0dc;
+  --accent:#0f6b5a; --accent-soft:#dcefe9; --up:#a2401f; --down:#1f6b3a;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#111715; --surface:#19211e; --fg:#e7eeea; --muted:#9aa8a2; --line:#2c3833;
+  --accent:#5cc2a8; --accent-soft:#1d3a33; --up:#f08a64; --down:#6fd394; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#19211e; --fg:#e7eeea; --muted:#9aa8a2; --line:#2c3833;
+  --accent:#5cc2a8; --accent-soft:#1d3a33; --up:#f08a64; --down:#6fd394; color-scheme:dark }
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,8vw,44px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lede{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:460px){.row{grid-template-columns:1fr}}
+label,.k{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px;font-weight:600}
+select,input{width:100%;box-sizing:border-box;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+input{font-family:var(--mono);font-variant-numeric:tabular-nums}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.swap{justify-self:start;background:none;border:1px solid var(--line);color:var(--accent);font:inherit;font-weight:600;font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer}
+.swap:hover{background:var(--accent-soft)}
+.answer{background:var(--accent-soft);border-radius:12px;padding:20px 18px;display:grid;gap:6px}
+.big{font-family:var(--display);font-weight:700;font-size:clamp(38px,11vw,56px);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.delta{font-family:var(--mono);font-size:14px}
+.delta.up{color:var(--up)} .delta.down{color:var(--down)}
+.answer p{margin:4px 0 0;max-width:60ch}
+.split{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin-top:4px}
+.split b{font-family:var(--mono);font-weight:500;color:var(--fg)}
+h2{font-family:var(--display);font-weight:600;font-size:20px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin:2px 0 0}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:7px 4px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+td{font-family:var(--mono)} td:first-child{font-family:var(--body)}
+tr.total td{font-weight:600;border-bottom:none}
+.list{display:grid;gap:4px;margin-top:10px}
+.item{display:grid;grid-template-columns:minmax(0,9.5rem) 1fr auto;align-items:center;gap:10px;font-size:13px;padding:3px 0}
+.item .n{min-width:0;line-height:1.3}
+.tag{display:block;margin-left:0 !important}
+.item.sel .n{font-weight:600;color:var(--accent)}
+.bar{height:8px;background:var(--line);border-radius:4px;position:relative;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--muted);border-radius:4px;opacity:.55}
+.item.sel .bar i{background:var(--accent);opacity:1}
+.item .v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;min-width:5.5rem}
+.tag{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--down);margin-left:6px}
+.note{font-size:12px;color:var(--muted);max-width:65ch;display:grid;gap:6px}
+.note p{margin:0}
+.note a{color:var(--accent)}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Paycheck Parity</h1>
+    <p class="lede">Moving cities? See the salary you'd need in your new city to keep the same lifestyle, after local prices and income taxes.</p>
+  </header>
+
+  <section class="card" aria-label="Your numbers">
+    <div>
+      <label for="salary">Current salary (per year, single filer)</label>
+      <input id="salary" inputmode="numeric" value="60,000">
+    </div>
+    <div class="row">
+      <div><label for="from">I live in</label><select id="from"></select></div>
+      <div><label for="to">Moving to</label><select id="to"></select></div>
+    </div>
+    <button class="swap" id="swap" type="button">Swap cities</button>
+  </section>
+
+  <section class="answer" aria-live="polite">
+    <span class="k">Salary you'd need</span>
+    <span class="big" id="out">$0</span>
+    <span class="delta" id="delta"></span>
+    <p id="explain"></p>
+    <div class="split"><span>Prices alone: <b id="priceOnly"></b></span><span>Tax effect: <b id="taxEffect"></b></span></div>
+  </section>
+
+  <section>
+    <h2>Where the paycheck goes</h2>
+    <p class="sub">Your current salary next to the matching salary in the new city.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th id="hA"></th><th id="hB"></th></tr></thead>
+      <tbody id="breakdown"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Your lifestyle, priced everywhere</h2>
+    <p class="sub">Salary needed in each city to match what you have now, most expensive first.</p>
+    <div class="list" id="list"></div>
+  </section>
+
+  <div class="note">
+    <p><b>Prices:</b> U.S. Bureau of Economic Analysis <a href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area" target="_blank" rel="noopener">Regional Price Parities</a> for 2023, the latest year BEA published metro figures (100 = U.S. average). Ellensburg uses Washington's nonmetro figure.</p>
+    <p><b>Taxes:</b> 2026 federal brackets and $16,100 standard deduction, Social Security (wage base $184,500) and Medicare, 2026 state brackets from the <a href="https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/" target="_blank" rel="noopener">Tax Foundation</a>, plus city income taxes in New York City, Philadelphia, Detroit, Kansas City, St. Louis, Cincinnati, Cleveland, and Portland's Metro and Multnomah County taxes.</p>
+    <p>Assumes a single filer with wage income and the standard deduction. Leaves out sales and property taxes, state payroll programs, and smaller credits, so treat results as estimates.</p>
+  </div>
+</div>
+
+<script>
+// ---- Price levels: BEA all-items RPP, 2023 (100 = U.S. average)
+// [name, rpp, state code, city tax code]
+const CITIES = [
+  ["San Francisco, CA",118.2,"CA"],["Los Angeles, CA",115.5,"CA"],["San Jose, CA",113.1,"CA"],
+  ["Seattle, WA",112.7,"WA"],["New York, NY",112.5,"NY","NYC"],["Miami, FL",111.8,"FL"],
+  ["Boston, MA",111.6,"MA"],["San Diego, CA",111.5,"CA"],["Honolulu, HI",110.2,"HI"],
+  ["Washington, DC",108.6,"DC"],["Portland, OR",106.6,"OR","PDX"],["Denver, CO",105.5,"CO"],
+  ["Phoenix, AZ",105.5,"AZ"],["Minneapolis, MN",104.5,"MN"],["Philadelphia, PA",103.5,"PA","PHL"],
+  ["Dallas, TX",103.3,"TX"],["Chicago, IL",102.6,"IL"],["Spokane, WA",100.9,"WA"],
+  ["Atlanta, GA",100.9,"GA"],["Houston, TX",100.2,"TX"],["Raleigh, NC",98.0,"NC"],
+  ["Detroit, MI",98.0,"MI","DET"],["Ellensburg, WA",97.9,"WA"],["Austin, TX",97.6,"TX"],
+  ["Las Vegas, NV",97.4,"NV"],["Nashville, TN",97.4,"TN"],["Salt Lake City, UT",96.4,"UT"],
+  ["St. Louis, MO",96.3,"MO","STL"],["Cincinnati, OH",94.1,"OH","CIN"],
+  ["Kansas City, MO",93.3,"MO","KC"],["Cleveland, OH",93.0,"OH","CLE"]
+];
+
+// ---- Tax engine, 2026, single filer, wage income only
+// brackets: [[threshold, rate], ...] rate applies to income above threshold
+const prog=(x,b)=>{let t=0;for(let i=0;i<b.length;i++){const lo=b[i][0],hi=i+1<b.length?b[i+1][0]:Infinity;if(x>lo)t+=(Math.min(x,hi)-lo)*b[i][1];}return t;};
+const pos=x=>Math.max(0,x);
+const FED=[[0,.10],[12400,.12],[50400,.22],[105700,.24],[201775,.32],[256225,.35],[640600,.37]];
+function federal(w){return prog(pos(w-16100),FED);}
+function fica(w){return Math.min(w,184500)*.062+w*.0145+pos(w-200000)*.009;}
+const STATE={
+  CA:w=>pos(prog(pos(w-5540),[[0,.01],[11079,.02],[26264,.04],[41452,.06],[57542,.08],[72724,.093],[371479,.103],[445771,.113],[742953,.123],[1e6,.133]])-153),
+  HI:w=>prog(pos(w-4400-1144),[[0,.014],[9600,.032],[14400,.055],[19200,.064],[24000,.068],[36000,.072],[48000,.076],[125000,.079],[175000,.0825],[225000,.09],[275000,.10],[325000,.11]]),
+  NY:w=>prog(pos(w-8000),[[0,.039],[8500,.044],[11700,.0515],[13900,.054],[80650,.059],[215400,.0685],[1077550,.0965],[5e6,.103],[25e6,.109]]),
+  DC:w=>prog(pos(w-16100),[[0,.04],[10000,.06],[40000,.065],[60000,.085],[250000,.0925],[500000,.0975],[1e6,.1075]]),
+  MA:w=>prog(pos(w-4400),[[0,.05],[1083150,.09]]),
+  CO:w=>pos(w-16100)*.044,
+  OR:w=>pos(prog(pos(w-2910),[[0,.0475],[4550,.0675],[11400,.0875],[125000,.099]])-256),
+  IL:w=>pos(w-2925)*.0495,
+  PA:w=>w*.0307,
+  AZ:w=>pos(w-8350)*.025,
+  MN:w=>prog(pos(w-15300),[[0,.0535],[33310,.068],[109430,.0785],[203150,.0985]]),
+  UT:w=>pos(w*.045-966),
+  GA:w=>pos(w-12000)*.0519,
+  NC:w=>pos(w-12750)*.0399,
+  MI:w=>pos(w-5900)*.0425,
+  MO:w=>prog(pos(w-16100),[[0,0],[1348,.02],[2696,.025],[4044,.03],[5392,.035],[6740,.04],[8088,.045],[9436,.047]]),
+  OH:w=>prog(pos(w-2400),[[0,0],[26050,.0275]]),
+  WA:()=>0, FL:()=>0, TX:()=>0, NV:()=>0, TN:()=>0
+};
+const CITYTAX={
+  NYC:w=>prog(pos(w-8000),[[0,.03078],[12000,.03762],[25000,.03819],[50000,.03876]]),
+  PDX:w=>pos(w-128000)*.01+pos(w-125000)*.015+pos(w-250000)*.015,
+  PHL:w=>w*.03735, DET:w=>w*.024, KC:w=>w*.01, STL:w=>w*.01, CIN:w=>w*.018, CLE:w=>w*.025
+};
+function taxes(w,c){
+  return {fed:federal(w),fica:fica(w),state:STATE[c[2]](w),local:c[3]?CITYTAX[c[3]](w):0};
+}
+function takeHome(w,c){const t=taxes(w,c);return w-t.fed-t.fica-t.state-t.local;}
+// salary in city c whose take-home buys the same as target real take-home
+function solve(realTarget,c){
+  const want=realTarget*c[1]/100; let lo=0,hi=5e6;
+  for(let i=0;i<70;i++){const m=(lo+hi)/2; if(takeHome(m,c)<want)lo=m;else hi=m;}
+  return (lo+hi)/2;
+}
+
+// ---- UI
+const $=id=>document.getElementById(id);
+const fmt=n=>(n<0?"−":"")+"$"+Math.round(Math.abs(n)).toLocaleString("en-US");
+const short=n=>n.split(",")[0];
+const opts=CITIES.map(([n])=>`<option>${n}</option>`).join("");
+$("from").innerHTML=opts; $("to").innerHTML=opts;
+$("from").value="Ellensburg, WA"; $("to").value="Portland, OR";
+const city=n=>CITIES.find(c=>c[0]===n);
+const salary=()=>Number(($("salary").value||"").replace(/[^0-9.]/g,""))||0;
+
+function render(){
+  const s=salary(), A=city($("from").value), B=city($("to").value);
+  const real=takeHome(s,A)*100/A[1];
+  const need=solve(real,B), priceOnly=s*B[1]/A[1];
+  const diff=need-s, pct=s?diff/s*100:0;
+  $("out").textContent=fmt(need);
+  const d=$("delta");
+  d.className="delta "+(Math.round(diff)>0?"up":Math.round(diff)<0?"down":"");
+  d.textContent=Math.round(diff)===0?"Same as now":`${diff>0?"+":"−"}${fmt(Math.abs(diff))} a year (${diff>0?"+":"−"}${Math.abs(pct).toFixed(1)}%)`;
+  const pp=(B[1]/A[1]-1)*100;
+  $("explain").textContent= A===B ? "Pick a different city to compare." :
+    `Prices in ${short(B[0])} run about ${Math.abs(pp).toFixed(0)}% ${pp>=0?"higher":"lower"} than in ${short(A[0])}. After taxes in both places, ${fmt(s)} in ${short(A[0])} lives like ${fmt(need)} in ${short(B[0])}.`;
+  $("priceOnly").textContent=fmt(priceOnly);
+  const te=need-priceOnly; $("taxEffect").textContent=(te>=0?"+":"")+fmt(te);
+
+  // breakdown
+  $("hA").textContent=short(A[0]); $("hB").textContent=short(B[0]);
+  const ta=taxes(s,A), tb=taxes(need,B);
+  const rows=[["Salary",s,need],["Federal income tax",-ta.fed,-tb.fed],["Social Security + Medicare",-ta.fica,-tb.fica],
+    ["State income tax",-ta.state,-tb.state],["City / local tax",-ta.local,-tb.local]];
+  $("breakdown").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join("")+
+    `<tr class="total"><td>Take-home pay</td><td>${fmt(takeHome(s,A))}</td><td>${fmt(takeHome(need,B))}</td></tr>`+
+    `<tr><td>Price level (U.S. = 100)</td><td>${A[1].toFixed(1)}</td><td>${B[1].toFixed(1)}</td></tr>`;
+
+  // ranked list
+  const all=CITIES.map(c=>[c[0],solve(real,c),!STATE[c[2]](100000)&&!c[3]]).sort((x,y)=>y[1]-x[1]);
+  const max=all[0][1];
+  $("list").innerHTML=all.map(([n,v,noTax])=>
+    `<div class="item${n===A[0]||n===B[0]?" sel":""}"><span class="n">${n}${noTax?'<span class="tag">No income tax</span>':""}</span><span class="bar"><i style="width:${(v/max*100).toFixed(1)}%"></i></span><span class="v">${fmt(v)}</span></div>`).join("");
+}
+$("salary").addEventListener("input",render);
+$("salary").addEventListener("blur",()=>{const s=salary(); if(s) $("salary").value=s.toLocaleString("en-US");});
+$("from").addEventListener("change",render); $("to").addEventListener("change",render);
+$("swap").addEventListener("click",()=>{const f=$("from").value;$("from").value=$("to").value;$("to").value=f;render();});
+render();
+</script>
+
+</body>
+</html>
