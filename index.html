@@ -4,9 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Moving cities? See the salary you need to keep the same lifestyle after local prices and 2026 federal, state, and city income taxes. Compare 31 U.S. cities.">
-<meta property="og:title" content="Paycheck Parity">
+<link rel="canonical" href="https://rileyklein01.github.io/paycheck-parity/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rileyklein01.github.io/paycheck-parity/">
+<meta property="og:title" content="Paycheck Parity: Cost of Living Salary Calculator">
 <meta property="og:description" content="The salary you need in a new city after prices and income taxes.">
-<title>Paycheck Parity</title>
+<meta name="twitter:card" content="summary">
+<title>Cost of Living Salary Calculator (2026, After Taxes) | Paycheck Parity</title>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Paycheck Parity","url":"https://rileyklein01.github.io/paycheck-parity/","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Cost of living calculator that shows the salary you need in a new U.S. city after local prices and 2026 federal, state, and city income taxes."}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: one narrow column; inputs card, the answer, a side by side paycheck breakdown, then every city ranked */
@@ -66,6 +71,10 @@ tr.total td{font-weight:600;border-bottom:none}
 .note{font-size:12px;color:var(--muted);max-width:65ch;display:grid;gap:6px}
 .note p{margin:0}
 .note a{color:var(--accent)}
+.cities{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;list-style:none}
+.cities a{display:inline-block;font-size:13px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.cities a:hover{background:var(--accent-soft)}
+.cities a[aria-current]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
 </style>
 <style>body{margin:0}</style>
 </head>
@@ -112,6 +121,12 @@ tr.total td{font-weight:600;border-bottom:none}
     <div class="list" id="list"></div>
   </section>
 
+  <section>
+    <h2>Salary needed by city</h2>
+    <p class="sub">Pick a destination to see what it takes to live there from every other city.</p>
+    <!--cities--><ul class="cities"><li><a href="/paycheck-parity/move-to/san-francisco-ca/">San Francisco, CA</a></li><li><a href="/paycheck-parity/move-to/los-angeles-ca/">Los Angeles, CA</a></li><li><a href="/paycheck-parity/move-to/san-jose-ca/">San Jose, CA</a></li><li><a href="/paycheck-parity/move-to/seattle-wa/">Seattle, WA</a></li><li><a href="/paycheck-parity/move-to/new-york-ny/">New York, NY</a></li><li><a href="/paycheck-parity/move-to/miami-fl/">Miami, FL</a></li><li><a href="/paycheck-parity/move-to/boston-ma/">Boston, MA</a></li><li><a href="/paycheck-parity/move-to/san-diego-ca/">San Diego, CA</a></li><li><a href="/paycheck-parity/move-to/honolulu-hi/">Honolulu, HI</a></li><li><a href="/paycheck-parity/move-to/washington-dc/">Washington, DC</a></li><li><a href="/paycheck-parity/move-to/portland-or/">Portland, OR</a></li><li><a href="/paycheck-parity/move-to/denver-co/">Denver, CO</a></li><li><a href="/paycheck-parity/move-to/phoenix-az/">Phoenix, AZ</a></li><li><a href="/paycheck-parity/move-to/minneapolis-mn/">Minneapolis, MN</a></li><li><a href="/paycheck-parity/move-to/philadelphia-pa/">Philadelphia, PA</a></li><li><a href="/paycheck-parity/move-to/dallas-tx/">Dallas, TX</a></li><li><a href="/paycheck-parity/move-to/chicago-il/">Chicago, IL</a></li><li><a href="/paycheck-parity/move-to/spokane-wa/">Spokane, WA</a></li><li><a href="/paycheck-parity/move-to/atlanta-ga/">Atlanta, GA</a></li><li><a href="/paycheck-parity/move-to/houston-tx/">Houston, TX</a></li><li><a href="/paycheck-parity/move-to/raleigh-nc/">Raleigh, NC</a></li><li><a href="/paycheck-parity/move-to/detroit-mi/">Detroit, MI</a></li><li><a href="/paycheck-parity/move-to/ellensburg-wa/">Ellensburg, WA</a></li><li><a href="/paycheck-parity/move-to/austin-tx/">Austin, TX</a></li><li><a href="/paycheck-parity/move-to/las-vegas-nv/">Las Vegas, NV</a></li><li><a href="/paycheck-parity/move-to/nashville-tn/">Nashville, TN</a></li><li><a href="/paycheck-parity/move-to/salt-lake-city-ut/">Salt Lake City, UT</a></li><li><a href="/paycheck-parity/move-to/st-louis-mo/">St. Louis, MO</a></li><li><a href="/paycheck-parity/move-to/cincinnati-oh/">Cincinnati, OH</a></li><li><a href="/paycheck-parity/move-to/kansas-city-mo/">Kansas City, MO</a></li><li><a href="/paycheck-parity/move-to/cleveland-oh/">Cleveland, OH</a></li></ul><!--/cities-->
+  </section>
+
   <div class="note">
     <p><b>Prices:</b> U.S. Bureau of Economic Analysis <a href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area" target="_blank" rel="noopener">Regional Price Parities</a> for 2023, the latest year BEA published metro figures (100 = U.S. average). Ellensburg uses Washington's nonmetro figure.</p>
     <p><b>Taxes:</b> 2026 federal brackets and $16,100 standard deduction, Social Security (wage base $184,500) and Medicare, 2026 state brackets from the <a href="https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/" target="_blank" rel="noopener">Tax Foundation</a>, plus city income taxes in New York City, Philadelphia, Detroit, Kansas City, St. Louis, Cincinnati, Cleveland, and Portland's Metro and Multnomah County taxes.</p>
@@ -150,7 +165,9 @@ const STATE={
   DC:w=>prog(pos(w-16100),[[0,.04],[10000,.06],[40000,.065],[60000,.085],[250000,.0925],[500000,.0975],[1e6,.1075]]),
   MA:w=>prog(pos(w-4400),[[0,.05],[1083150,.09]]),
   CO:w=>pos(w-16100)*.044,
-  OR:w=>pos(prog(pos(w-2910),[[0,.0475],[4550,.0675],[11400,.0875],[125000,.099]])-256),
+  // Oregon lets filers subtract federal income tax (capped, phased out above $125k) and gives a $256 exemption credit up to $100k
+  OR:w=>{const cap=w<125000?8750:w<145000?8750-1750*(Math.floor((w-125000)/5000)+1):0;
+    return pos(prog(pos(w-2910-Math.min(federal(w),cap)),[[0,.0475],[4550,.0675],[11400,.0875],[125000,.099]])-(w<=100000?256:0));},
   IL:w=>pos(w-2925)*.0495,
   PA:w=>w*.0307,
   AZ:w=>pos(w-8350)*.025,
@@ -185,8 +202,14 @@ const fmt=n=>(n<0?"−":"")+"$"+Math.round(Math.abs(n)).toLocaleString("en-US");
 const short=n=>n.split(",")[0];
 const opts=CITIES.map(([n])=>`<option>${n}</option>`).join("");
 $("from").innerHTML=opts; $("to").innerHTML=opts;
-$("from").value="Ellensburg, WA"; $("to").value="Portland, OR";
 const city=n=>CITIES.find(c=>c[0]===n);
+const DEFAULT_FROM="Ellensburg, WA", DEFAULT_TO="Portland, OR";
+// shareable links: ?from=Seattle, WA&to=Austin, TX&salary=85000
+const qs=new URLSearchParams(location.search);
+$("from").value=city(qs.get("from"))?qs.get("from"):DEFAULT_FROM;
+$("to").value=city(qs.get("to"))?qs.get("to"):DEFAULT_TO;
+if(Number(qs.get("salary"))>0) $("salary").value=Number(qs.get("salary")).toLocaleString("en-US");
+function saveUrl(){try{const q=new URLSearchParams({from:$("from").value,to:$("to").value,salary:String(salary())});history.replaceState(null,"","?"+q);}catch(e){}}
 const salary=()=>Number(($("salary").value||"").replace(/[^0-9.]/g,""))||0;
 
 function render(){
@@ -219,10 +242,11 @@ function render(){
   $("list").innerHTML=all.map(([n,v,noTax])=>
     `<div class="item${n===A[0]||n===B[0]?" sel":""}"><span class="n">${n}${noTax?'<span class="tag">No income tax</span>':""}</span><span class="bar"><i style="width:${(v/max*100).toFixed(1)}%"></i></span><span class="v">${fmt(v)}</span></div>`).join("");
 }
+$("salary").addEventListener("change",saveUrl); $("from").addEventListener("change",saveUrl); $("to").addEventListener("change",saveUrl);
 $("salary").addEventListener("input",render);
 $("salary").addEventListener("blur",()=>{const s=salary(); if(s) $("salary").value=s.toLocaleString("en-US");});
 $("from").addEventListener("change",render); $("to").addEventListener("change",render);
-$("swap").addEventListener("click",()=>{const f=$("from").value;$("from").value=$("to").value;$("to").value=f;render();});
+$("swap").addEventListener("click",()=>{const f=$("from").value;$("from").value=$("to").value;$("to").value=f;render();saveUrl();});
 render();
 </script>
 
