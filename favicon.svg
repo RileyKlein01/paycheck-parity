@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8432A"/><stop offset=".62" stop-color="#FF8A3D"/><stop offset="1" stop-color="#FFC24B"/></linearGradient>
+<clipPath id="above"><rect x="0" y="0" width="400" height="262"/></clipPath></defs>
+<rect width="400" height="400" fill="url(#sky)"/>
+<g stroke="#FFF6EA" stroke-width="14" stroke-linecap="round">
+<line x1="200" y1="92" x2="200" y2="122"/><line x1="96" y1="135" x2="117" y2="156"/><line x1="304" y1="135" x2="283" y2="156"/>
+<line x1="52" y1="238" x2="82" y2="238"/><line x1="348" y1="238" x2="318" y2="238"/>
+<line x1="63" y1="183" x2="91" y2="194"/><line x1="337" y1="183" x2="309" y2="194"/></g>
+<circle cx="200" cy="262" r="92" fill="#FFF6EA" clip-path="url(#above)"/>
+<rect x="0" y="262" width="400" height="138" fill="#1B1530"/>
+<path d="M190 262 L210 262 L290 400 L110 400 Z" fill="#FF8A3D"/>
+<path d="M198 280 L202 280 L203 300 L197 300 Z M196 318 L204 318 L206 348 L194 348 Z M193 370 L207 370 L209 400 L191 400 Z" fill="#FFF6EA"/>
+</svg>

@@ -9,28 +9,38 @@
 <meta property="og:url" content="https://rileyklein01.github.io/paycheck-parity/">
 <meta property="og:title" content="Paycheck Parity: Cost of Living Salary Calculator">
 <meta property="og:description" content="The salary you need in a new city after prices and income taxes.">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://rileyklein01.github.io/paycheck-parity/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rileyklein01.github.io/paycheck-parity/og.png">
+<meta name="theme-color" content="#e8432a">
+<link rel="icon" href="/paycheck-parity/favicon.svg" type="image/svg+xml">
 <title>Cost of Living Salary Calculator (2026, After Taxes) | Paycheck Parity</title>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Paycheck Parity","url":"https://rileyklein01.github.io/paycheck-parity/","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Cost of living calculator that shows the salary you need in a new U.S. city after local prices and 2026 federal, state, and city income taxes."}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: one narrow column; inputs card, the answer, a side by side paycheck breakdown, then every city ranked */
 :root{
-  --bg:#f3f5f4; --surface:#ffffff; --fg:#17201d; --muted:#5b6762; --line:#d9e0dc;
-  --accent:#0f6b5a; --accent-soft:#dcefe9; --up:#a2401f; --down:#1f6b3a;
+  /* Sunrise palette: coral and gold for the excitement of a move, a soft dawn glow for the fresh start */
+  --bg:#fff8f0; --surface:#ffffff; --fg:#1b1530; --muted:#6b6276; --line:#efe2d6;
+  --accent:#c43a17; --accent-soft:#ffe9dc; --gold:#ffb627; --up:#a8261c; --down:#1e7a4c;
+  --dawn:linear-gradient(135deg,#ffe0cf 0%,#ffeec4 100%);
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#111715; --surface:#19211e; --fg:#e7eeea; --muted:#9aa8a2; --line:#2c3833;
-  --accent:#5cc2a8; --accent-soft:#1d3a33; --up:#f08a64; --down:#6fd394; color-scheme:dark }}
+  --bg:#16121f; --surface:#211b2d; --fg:#f6efe7; --muted:#a79db3; --line:#352c44;
+  --accent:#ff7a4d; --accent-soft:#3b2330; --gold:#ffc24b; --up:#ff8a7a; --down:#6fd394;
+  --dawn:linear-gradient(135deg,#3d2232 0%,#3a2c1b 100%); color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#111715; --surface:#19211e; --fg:#e7eeea; --muted:#9aa8a2; --line:#2c3833;
-  --accent:#5cc2a8; --accent-soft:#1d3a33; --up:#f08a64; --down:#6fd394; color-scheme:dark }
+  --bg:#16121f; --surface:#211b2d; --fg:#f6efe7; --muted:#a79db3; --line:#352c44;
+  --accent:#ff7a4d; --accent-soft:#3b2330; --gold:#ffc24b; --up:#ff8a7a; --down:#6fd394;
+  --dawn:linear-gradient(135deg,#3d2232 0%,#3a2c1b 100%); color-scheme:dark }
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
 .wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1 .glow{background:linear-gradient(90deg,var(--accent),#ff8a3d 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,8vw,44px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
 .lede{color:var(--muted);margin:6px 0 0;max-width:60ch}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:14px}
@@ -42,7 +52,7 @@ input{font-family:var(--mono);font-variant-numeric:tabular-nums}
 select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .swap{justify-self:start;background:none;border:1px solid var(--line);color:var(--accent);font:inherit;font-weight:600;font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer}
 .swap:hover{background:var(--accent-soft)}
-.answer{background:var(--accent-soft);border-radius:12px;padding:20px 18px;display:grid;gap:6px}
+.answer{background:var(--dawn);border:1px solid var(--line);border-radius:12px;padding:20px 18px;display:grid;gap:6px}
 .big{font-family:var(--display);font-weight:700;font-size:clamp(38px,11vw,56px);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
 .delta{font-family:var(--mono);font-size:14px}
 .delta.up{color:var(--up)} .delta.down{color:var(--down)}
@@ -64,8 +74,8 @@ tr.total td{font-weight:600;border-bottom:none}
 .tag{display:block;margin-left:0 !important}
 .item.sel .n{font-weight:600;color:var(--accent)}
 .bar{height:8px;background:var(--line);border-radius:4px;position:relative;overflow:hidden}
-.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--muted);border-radius:4px;opacity:.55}
-.item.sel .bar i{background:var(--accent);opacity:1}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--gold);border-radius:4px;opacity:.6}
+.item.sel .bar i{background:linear-gradient(90deg,var(--accent),var(--gold));opacity:1}
 .item .v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;min-width:5.5rem}
 .tag{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--down);margin-left:6px}
 .note{font-size:12px;color:var(--muted);max-width:65ch;display:grid;gap:6px}
@@ -82,7 +92,7 @@ tr.total td{font-weight:600;border-bottom:none}
 
 <div class="wrap">
   <header>
-    <h1>Paycheck Parity</h1>
+    <h1>Paycheck <span class="glow">Parity</span></h1>
     <p class="lede">Moving cities? See the salary you'd need in your new city to keep the same lifestyle, after local prices and income taxes.</p>
   </header>
 

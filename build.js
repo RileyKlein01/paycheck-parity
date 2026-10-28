@@ -49,7 +49,7 @@ for (const B of CITIES) {
     .replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${url}">`)
     .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="Salary needed to live in ${esc(name)}">`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/, "")
-    .replace(/<h1>[^<]*<\/h1>/, `<h1>What salary do you need in ${esc(short)}?</h1>`)
+    .replace(/<h1>[\s\S]*?<\/h1>/, `<h1>What salary do you need in <span class="glow">${esc(short)}</span>?</h1>`)
     .replace(/<p class="lede">[^<]*<\/p>/, `<p class="lede">Enter your salary and current city to see what it takes to keep the same lifestyle in ${esc(name)}, after local prices and income taxes. <a href="/paycheck-parity/" style="color:var(--accent)">Compare any two cities</a>.</p>`)
     .replace(/const DEFAULT_FROM="[^"]*", DEFAULT_TO="[^"]*";/,
       `const DEFAULT_FROM="${name === "Seattle, WA" ? "Portland, OR" : "Seattle, WA"}", DEFAULT_TO="${name}";`)
